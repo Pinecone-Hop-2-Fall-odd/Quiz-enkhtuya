@@ -19,8 +19,8 @@ const NavBar = () => {
         <div className='flex justify-center items-center h-[40px] w-[40px] rounded-[50%] bg-[#4254ff]'>
           <IoAdd className='h-[25px] w-[25px] text-[#FFFFFF]' />
         </div>
-        <button onClick={() => router.push('/signup')} className='py-[10px] px-[15px] justify-center items-center text-[#586380] rounded-[10px] hover:bg-[#E0E3EC]'>Log in</button>
-        <button className='py-[10px] px-[15px] justify-center items-center bg-[#FFCD1F] hover:bg-[#FFDA56] text-[#000000] rounded-[10px]'>Sign up</button>
+        <button onClick={() => router.push('/login')} className='py-[10px] px-[15px] justify-center items-center text-[#586380] rounded-[10px] hover:bg-[#E0E3EC]'>Log in</button>
+        <button onClick={() => router.push(`/signup`)} className='py-[10px] px-[15px] justify-center items-center bg-[#FFCD1F] hover:bg-[#FFDA56] text-[#000000] rounded-[10px]'>Sign up</button>
         {/* <img src='./avatar0.webp' className='h-[40px] w-[40px] rounded-[50%] border-[#e0e3ec] border-2' />
         <h3 className='text-[#e0e3ec]'>@mikeWazowski</h3> */}
       </div>
