@@ -3,11 +3,13 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { IoIosSearch } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
+// Category
 import { MdOutlineScience } from "react-icons/md";
 import { AiFillHome } from "react-icons/ai";
 import { FaPaintbrush } from "react-icons/fa6";
 import { BiConversation } from "react-icons/bi";
 import { IoLanguage } from "react-icons/io5";
+import { BsThreeDots } from "react-icons/bs";
 
 const NavBar = () => {
   const router = useRouter();
@@ -51,6 +53,10 @@ const NavBar = () => {
         <button className='flex flex-col justify-center items-center p-[5px]'>
           <IoLanguage className='h-[25px] w-[25px]' />
           <h4>Languages</h4>
+        </button>
+        <button className='flex flex-col justify-center items-center p-[5px]'>
+          <BsThreeDots className='h-[25px] w-[25px]' />
+          <h4>Other</h4>
         </button>
       </div>
     </div>
