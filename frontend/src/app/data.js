@@ -3,7 +3,7 @@ const quizzes = [
         id: 1,
         name: 'Biology quiz',
         creator: 'random1',
-        category: 'science',
+        category: 'Science',
         quiz: [
             {
                 question: 'What is the primary function of the mitochondria in a cell?',
@@ -75,8 +75,7 @@ const quizzes = [
         id: 2,
         name: 'Chinese quiz',
         creator: 'cloudy',
-        category: 'languages',
-        score: 70,
+        category: 'Languages',
         quiz: [
             {
                 question: 'Translate the following sentence into Chinese: I have been studying Chinese for two years.',
@@ -98,6 +97,78 @@ const quizzes = [
             },
             {
                 question: 'Choose the correct measure word for the word "书" (shū - book)',
+                options: [
+                    { answer: '本', isCorrect: true },
+                    { answer: '张', isCorrect: false },
+                    { answer: '包', isCorrect: false },
+                    { answer: '条', isCorrect: false },
+                ]
+            },
+            {
+                question: 'What does the Chinese phrase "一边...一边..." (yībiān... yībiān...) indicate in a sentence?',
+                options: [
+                    { answer:'Comparison', isCorrect: false},
+                    { answer: 'Cause and effect', isCorrect: false },
+                    { answer: 'Simultaneous actions', isCorrect: true },
+                    { answer: 'Condition', isCorrect: false },
+                ]
+            },
+            {
+                question: 'Choose the correct sentence structure for the sentence: "I plan to go to Beijing next month."',
+                options: [
+                    { answer:' 我计划下个月去北京。', isCorrect: false},
+                    { answer: ' 我下个月去计划北京。', isCorrect: false },
+                    { answer: '下个月我计划去北京。', isCorrect: true },
+                    { answer: '去北京我计划下个月。', isCorrect: false },
+                ]
+            },
+            {
+                question: 'What is the meaning of the Chinese word "熟悉" (shúxī)?',
+                options: [
+                    { answer:' Difficult', isCorrect: false},
+                    { answer: 'Familiar', isCorrect: true },
+                    { answer: 'Important', isCorrect: false },
+                    { answer: ' Busy', isCorrect: false },
+                ]
+            },
+            {
+                question: 'Translate the sentence "Can you help me find my phone?" into Chinese.',
+                options: [
+                    { answer: '你能帮我找我的手机吗？', isCorrect: true},
+                    { answer: '你能帮我找手机吗？', isCorrect: false },
+                    { answer: '你能帮我找我手机吗？', isCorrect: false },
+                    { answer: '你能帮手机我找吗？', isCorrect: false },
+                ]
+            }
+        ]
+    },
+
+    {
+        id: 3,
+        name: 'Social science quiz',
+        creator: 'od',
+        category: 'Social science',
+        quiz: [
+            {
+                question: 'What is the main focus of sociology?',
+                options: [
+                    { answer: "Study of Earth's physical features", isCorrect: false },
+                    { answer: 'Study of human societies and social behavior', isCorrect: true },
+                    { answer: 'Analysis of economic systems', isCorrect: false},
+                    { answer: 'Examination of ancient civilizations', isCorrect: false },
+                ]
+            },
+            {
+                question: 'Who is considered the father of modern economics?',
+                options: [
+                    { answer: 'Karl Marx', isCorrect: false },
+                    { answer: 'Adam Smith', isCorrect: true },
+                    { answer: 'John Maynard Keynes', isCorrect: false },
+                    { answer: 'Friedrich Hayek', isCorrect: false },
+                ]
+            },
+            {
+                question: 'Which document serves as the foundation of the United States government and outlines its fundamental principles?',
                 options: [
                     { answer: '本', isCorrect: true },
                     { answer: '张', isCorrect: false },
