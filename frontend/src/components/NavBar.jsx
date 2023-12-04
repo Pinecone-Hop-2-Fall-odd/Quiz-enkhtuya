@@ -14,14 +14,18 @@ import quizzes from '@/app/data';
 
 const NavBar = ({ index, handleClick, setQuizData}) => {
   const router = useRouter();
-
+  const search = (input) => {
+    const filteredSearch = quizzes.filter((val) => val.name.toLowerCase() === input.toLowerCase());
+    setQuizData(filteredSearch); 
+  }
   return (
     <div className='flex flex-col min-h-[10%] w-full fixed justify-between items-center px-[5%] gap-[10px] bg-[#ffffff]'>
       <div className='flex min-h-[5%] w-full justify-between items-center px-[5%] pt-[20px] gap-[20px] bg-[#ffffff]'>
         <h1 className='text-[#206be5] font-bold text-[35px]'>Quiz</h1>
         <div className='flex items-center gap-[10px] bg-[#f6f7fb] h-[90%] w-[60%] rounded-[50px] p-[8px] pl-[10px]'>
           <IoIosSearch style={{ color: '#586380' }} />
-          <input type='text' placeholder='Search by keyword or subject' className='w-[85%] bg-[#f6f7fb]' />
+          <input type='text' placeholder='Search by keyword or subject' onKeyDown={(e) => { if(e.key === "Enter") return search}} 
+          onChange={(e) => search(e.target.value)} className='w-[85%] bg-[#f6f7fb]' />
         </div>
         <div className='flex gap-[15px] justify-center items-center'>
           <div className='flex justify-center items-center h-[40px] w-[40px] rounded-[50%] bg-[#206be5] cursor-pointer'>

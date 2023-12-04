@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import quizzes from './data';
 
-export default function Home() {
+export default function Home() {  
+  const router = useRouter();
   const [quizData, setQuizData] = useState(quizzes);
   const [index, setIndex] = useState();
   const handleClick = (idx, category) => {
@@ -15,7 +16,6 @@ export default function Home() {
     console.log(filteredData);
     setQuizData(filteredData);
   }
-  const router = useRouter();
   return (
     <main className="flex min-h-screen bg-[#f6f7fb]">
         <NavBar index={index} handleClick={handleClick} setQuizData={setQuizData}/>
