@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import quizzes from './data';
 
-export default function Home() {  
+export default function Home() {
   const router = useRouter();
   const [quizData, setQuizData] = useState(quizzes);
   const [index, setIndex] = useState();
@@ -16,15 +16,16 @@ export default function Home() {
     console.log(filteredData);
     setQuizData(filteredData);
   }
+
   return (
     <main className="flex min-h-screen bg-[#f6f7fb]">
-        <NavBar index={index} handleClick={handleClick} setQuizData={setQuizData}/>
-        <div className='flex flex-col justify-start items-start p-[5%] mt-[140px] w-full'>
-          <div className='flex justify-center items-center bg-[#FFFFFF] w-[45%] h-[20%] p-[15px]'>
-            <button onClick={() => router.push('/createQuiz')} className='bg-[#206be5] p-[10px] rounded-[20px] text-[#FFFFFF]'>Create Quiz! </button>
-          </div>
-          <Cards quizData={quizData}/>
+      <NavBar index={index} handleClick={handleClick} setQuizData={setQuizData} />
+      <div className='flex flex-col justify-start items-start p-[5%] mt-[140px] w-full'>
+        <div className='flex justify-center items-center bg-[#FFFFFF] w-[45%] h-[20%] p-[15px]'>
+          <button onClick={() => router.push('/createQuiz')} className='bg-[#206be5] p-[10px] rounded-[20px] text-[#FFFFFF]'>Create Quiz! </button>
         </div>
+        <Cards quizData={quizData} />
+      </div>
     </main>
   )
 }
