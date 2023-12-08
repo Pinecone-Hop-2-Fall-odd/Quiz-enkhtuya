@@ -3,16 +3,19 @@ import Cards from '@/components/Cards'
 import NavBar from '@/components/NavBar'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import quizzes from './data';
+// import quizzes from './data';
+import array from './data2';
 
 export default function Home() {
   const router = useRouter();
-  const [quizData, setQuizData] = useState(quizzes);
+  // const [quizData, setQuizData] = useState(quizzes);
+  const [quizData, setQuizData] = useState(array);
   const [index, setIndex] = useState();
   const handleClick = (idx, category) => {
     console.log(idx, category);
     setIndex(idx);
-    const filteredData = quizzes.filter((val) => val.category === category);
+    // const filteredData = quizzes.filter((val) => val.category === category);
+    const filteredData = array.filter((val) => val.category === category);
     console.log(filteredData);
     setQuizData(filteredData);
   }

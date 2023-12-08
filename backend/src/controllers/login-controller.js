@@ -1,4 +1,6 @@
 import { UserModel } from '../models/user-model.js';
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 export const login = async (req, res) => {
    const body = req.body;
@@ -11,14 +13,21 @@ export const login = async (req, res) => {
       return;
    }
 
-   const filteredUser = await UserModel.find({ email: body.email });
+   const filteredUser = await UserModel.findOne({ email: body.email });
 
-   if (filteredUser.length === 0) {
+   if (!filteredUser) {
       res.status(405).json({ message: 'User not found' })
    } else {
-      const user = filteredUser[0];
-      if (user.password === body.password) {
-         res.status(200).json({ status: 'success', data: { user } });
+      if (await bcrypt.compare(body.password, filteredUser.password)) {
+         // jwt
+         const token = jwt.sign(
+            { user_id: filteredUser._id, email: filteredUser.email },
+            "PrivateKey",
+            { expiresIn: "2h", }
+         );
+
+         res.status(200).json({token});
+         return;
       } else {
          res.status(405).json({ message: 'Password not match' })
          return;
