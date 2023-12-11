@@ -10,13 +10,15 @@ import { FaPaintbrush } from "react-icons/fa6";
 import { BiConversation } from "react-icons/bi";
 import { IoLanguage } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
-import quizzes from '@/app/data';
+import array from '@/app/data2';
 
-const NavBar = ({ index, handleClick, setQuizData}) => {
+const NavBar = ({ index, handleClick, setQuizData, setDt, quizData}) => {
   const router = useRouter();
   const search = (input) => {
-    const filteredSearch = quizzes.filter((val) => val.name.toLowerCase() === input.toLowerCase());
-    setQuizData(filteredSearch); 
+    // const filteredSearch = array.filter((val) => val.name.toLowerCase() === input.toLowerCase());
+    const filteredSearch = quizData.filter((val) => val.name.toLowerCase() === input.toLowerCase());
+    // setQuizData(filteredSearch); 
+    setDt(filteredSearch); 
   }
   return (
     <div className='flex flex-col min-h-[10%] w-full fixed justify-between items-center px-[5%] gap-[10px] bg-[#ffffff]'>
@@ -39,7 +41,7 @@ const NavBar = ({ index, handleClick, setQuizData}) => {
       </div>
 
       <div className='flex min-h-[5%] w-full justify-between items-center p-[10px] px-[5%] gap-[15px]'>
-        <button onClick={() => setQuizData(quizzes)} className='flex flex-col justify-center items-center p-[5px] text-[#586380]'>
+        <button onClick={() => setDt(quizData)} className='flex flex-col justify-center items-center p-[5px] text-[#586380]'>
           {/* onClick={() => handleClick(idx, category.name)} key={idx} style={{ color: index === idx ? '#206be5' : '#586380' }} */}
           <AiFillHome className='h-[25px] w-[25px]' />
           <h4>Home</h4>

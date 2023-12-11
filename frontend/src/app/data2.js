@@ -1,6 +1,6 @@
 const array = [
     {
-        id: 1,
+        _id: '6576e0af660750584b393ae5',
         name: 'Biology quiz',
         creator: 'random1',
         category: 'Science',
@@ -43,7 +43,7 @@ const array = [
         ]
     },
     {
-        id: 2,
+        _id: '6576e359660750584b393aef',
         name: 'Chinese quiz',
         creator: 'random1',
         category: 'Languages',
@@ -86,7 +86,7 @@ const array = [
         ]
     },
     {
-        id: 3,
+        _id: '6576dc92626bd062e59ec5be',
         name: 'Social science quiz',
         creator: 'random1',
         category: 'Art & Humanities',
