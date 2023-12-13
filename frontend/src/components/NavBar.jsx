@@ -10,14 +10,11 @@ import { FaPaintbrush } from "react-icons/fa6";
 import { BiConversation } from "react-icons/bi";
 import { IoLanguage } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
-import array from '@/app/data2';
 
-const NavBar = ({ index, handleClick, setQuizData, setDt, quizData}) => {
+const NavBar = ({ index, handleClick, setDt, quizData}) => {
   const router = useRouter();
   const search = (input) => {
-    // const filteredSearch = array.filter((val) => val.name.toLowerCase() === input.toLowerCase());
-    const filteredSearch = quizData.filter((val) => val.name.toLowerCase() === input.toLowerCase());
-    // setQuizData(filteredSearch); 
+    const filteredSearch = quizData.filter((val) => val.subjectName.toLowerCase() === input.toLowerCase());
     setDt(filteredSearch); 
   }
   return (
@@ -41,11 +38,6 @@ const NavBar = ({ index, handleClick, setQuizData, setDt, quizData}) => {
       </div>
 
       <div className='flex min-h-[5%] w-full justify-between items-center p-[10px] px-[5%] gap-[15px]'>
-        <button onClick={() => setDt(quizData)} className='flex flex-col justify-center items-center p-[5px] text-[#586380]'>
-          {/* onClick={() => handleClick(idx, category.name)} key={idx} style={{ color: index === idx ? '#206be5' : '#586380' }} */}
-          <AiFillHome className='h-[25px] w-[25px]' />
-          <h4>Home</h4>
-        </button>
         {categories.map((category, idx) => (
           <button onClick={() => handleClick(idx, category.name)} key={idx} style={{ color: index === idx ? '#206be5' : '#586380' }} className='flex flex-col justify-center items-center p-[5px] text-[#586380]'>
             {category.icon}
@@ -59,6 +51,6 @@ const NavBar = ({ index, handleClick, setQuizData, setDt, quizData}) => {
 
 export default NavBar
 
-const categories = [{ icon: <MdOutlineScience className='h-[25px] w-[25px]' />, name: 'Science' },
+const categories = [{ icon: <AiFillHome className='h-[25px] w-[25px]' />, name: 'Home' }, { icon: <MdOutlineScience className='h-[25px] w-[25px]' />, name: 'Science' },
 { icon: <FaPaintbrush className='h-[25px] w-[25px]' />, name: 'Art & Humanities' }, { icon: <BiConversation className='h-[25px] w-[25px]' />, name: 'Social science' },
 { icon: <IoLanguage className='h-[25px] w-[25px]' />, name: 'Languages' }, { icon: <BsThreeDots className='h-[25px] w-[25px]' />, name: 'Other' }];
