@@ -57,7 +57,7 @@ const Quiz = ({ searchParams }) => {
   }, []);
 
   function again() {
-    setQuestionsAndAnswers(questionsAndAnswers.map((el) => ({...el, selected: "" })));
+    setQuestionsAndAnswers(questionsAndAnswers.map((el) => ({ ...el, selected: "" })));
     setScore(0);
     setWarning(false);
     setShowResult(false);
@@ -83,17 +83,17 @@ const Quiz = ({ searchParams }) => {
                   key={index}
                   style={{
                     display: "flex", justifyContent: "center", alignItems: "center", padding: "5px",
-                    backgroundColor: answer === val.selected ? '#A5BEE9' : '#427FE6', width: "240px", 
+                    backgroundColor: answer === val.selected ? '#A5BEE9' : '#427FE6', width: "240px",
                   }}>
                   {answer}</button>))}
             </div>
           </div>))}
-        {warning && <h1>Some questions weren't answered!!</h1> }
-        {showResult && !warning ? 
-        (<div className="flex flex-col justify-center items-center gap-[10px]">
-          <h1>Your score: {score}/{questionsAndAnswers.length}</h1>
-          <button className="bg-[#2475B7] p-[10px] text-[#FFFFFF]" onClick={() => again()}>Again</button>
-        </div>) : ""}
+        {warning && <h1>Some questions weren't answered!!</h1>}
+        {showResult && !warning ?
+          (<div className="flex flex-col justify-center items-center gap-[10px]">
+            <h1>Your score: {score}/{questionsAndAnswers.length}</h1>
+            <button className="bg-[#2475B7] p-[10px] text-[#FFFFFF]" onClick={() => again()}>Again</button>
+          </div>) : ""}
         {!showResult && (<button onClick={() => checkAnswers()} className="bg-[#2475B7] p-[10px] text-[#FFFFFF]">Submit</button>)}
       </div>
     </div>

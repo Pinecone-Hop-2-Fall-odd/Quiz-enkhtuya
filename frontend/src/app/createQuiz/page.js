@@ -9,7 +9,7 @@ const Page = () => {
   // const [cards, setCards] = useState([<Question number={1} setNewQuizData={setNewQuizData} />]);
   // const [cards, setCards] = useState([]);
 
-  // console.log('newQuizData', Object.values(newQuizData))
+  
   const addCard = () => {
     setNumber(number + 1);
 
@@ -32,6 +32,7 @@ const Page = () => {
   }
 
   const handleSubmit = async () => {
+    console.log('newQuizData', Object.values(newQuizData));
     // const options = {
     //   method: 'POST',
     //   url: 'http://localhost:8000/user',
@@ -48,7 +49,10 @@ const Page = () => {
     // });
     // console.log(newData);
     // console.log(newQuizData);
-    const data = { subjectName: newData.subjectName, quiz: [newQuizData] }
+    const quiz =  Object.values(newQuizData).map((el) => Object.values(el.incorrectAnswers));
+    console.log(quiz);
+    const data = { subjectName: newData.subjectName, quiz: Object.values(newQuizData) }
+    //const data = { subjectName: newData.subjectName, quiz: [newQuizData] }
     console.log(data);
   }
   // {
