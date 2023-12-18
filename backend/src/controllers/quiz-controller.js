@@ -16,7 +16,6 @@ export const createQuiz = async (req, res) => {
 
         const newQuiz = await QuizModel.create({
             subjectName: body.subjectName,
-            creator: body.creator,
             category: body.category,
             difficulty: body.difficulty,
             time: body.time,

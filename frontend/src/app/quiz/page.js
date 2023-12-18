@@ -29,6 +29,7 @@ const Quiz = ({ searchParams }) => {
   }
 
   function checkAnswers() {
+    console.log('setT')
     questionsAndAnswers.map((obj) => {
       if (obj.selected === "") return setWarning(true);
       else if (obj.selected === obj.correctAnswer) return setScore((prev) => prev + 1);
@@ -46,7 +47,7 @@ const Quiz = ({ searchParams }) => {
               return ({
                 subjectName: quizData[0]?.subjectName,
                 question: el.question,
-                allAnswers: shuffle([el.correctAnswer, ...el.incorrectAnswers]),
+                allAnswers: shuffle([el.correctAnswer, ...Object.values(el.incorrectAnswers)]),
                 correctAnswer: el.correctAnswer,
                 selected: "",
               })
@@ -74,6 +75,7 @@ const Quiz = ({ searchParams }) => {
           >x</button>
         </div>
         {questionsAndAnswers?.map((val, index) => (
+         
           <div key={index} className="flex flex-col bg-[#FFFFFF] w-[900px] h-[300px] p-[5%] justify-center items-center gap-[10px]">
             <div className="flex justify-end w-[100%]">{index + 1} of {questionsAndAnswers.length}</div>
             <h3>{val.question}</h3>
@@ -83,7 +85,7 @@ const Quiz = ({ searchParams }) => {
                   key={index}
                   style={{
                     display: "flex", justifyContent: "center", alignItems: "center", padding: "5px",
-                    backgroundColor: answer === val.selected ? '#A5BEE9' : '#427FE6', width: "240px",
+                    backgroundColor: `${showResult ?( answer === val.correctAnswer ? "green": answer === val.selected ? "red" : "#427FE6" ): (answer === val.selected ? 'green' : '#427FE6') }`, width: "240px",
                   }}>
                   {answer}</button>))}
             </div>
@@ -101,5 +103,3 @@ const Quiz = ({ searchParams }) => {
 };
 
 export default Quiz;
-
-//className={`${ showResult && val.selected === val.correctAnswer ? '#83D021' : '#417fe6'} ${ showResult && val.selected !== val.correctAnswer ? '#E24417' : '#417fe6'} ${ answer === val.selected ? '#A5BEE9' : '#427FE6'}`}

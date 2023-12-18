@@ -11,11 +11,11 @@ import { BiConversation } from "react-icons/bi";
 import { IoLanguage } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
 
-const NavBar = ({ index, handleClick, setDt, quizData}) => {
+const NavBar = ({ index, handleClick, setQuizData, initialData}) => {
   const router = useRouter();
   const search = (input) => {
-    const filteredSearch = quizData.filter((val) => val.subjectName.toLowerCase() === input.toLowerCase());
-    setDt(filteredSearch); 
+    const filteredSearch = initialData.filter((quiz) => { return quiz.subjectName.toLowerCase().includes(input.toLowerCase())});
+    setQuizData(filteredSearch); 
   }
   return (
     <div className='flex flex-col min-h-[10%] w-full fixed justify-between items-center px-[5%] gap-[10px] bg-[#ffffff]'>

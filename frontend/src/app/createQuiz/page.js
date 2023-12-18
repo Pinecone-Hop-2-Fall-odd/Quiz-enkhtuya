@@ -1,59 +1,49 @@
 'use client'
 import React, { useState } from 'react'
 import Question from '@/components/Question'
+import axios from 'axios'
 
 const Page = () => {
   const [number, setNumber] = useState(2);
   const [newData, setNewData] = useState({});
   const [newQuizData, setNewQuizData] = useState({});
-  // const [cards, setCards] = useState([<Question number={1} setNewQuizData={setNewQuizData} />]);
-  // const [cards, setCards] = useState([]);
+  const categories = ['Choose Category' , 'Home', 'Science', 'Art & Humanities', 'Social science', 'Languages', 'Other'];
 
-  
   const addCard = () => {
     setNumber(number + 1);
-
     setNewQuizData((prev) => ({ ...prev, [Object.values(prev).length + 1]: { question: '', correctAnswer: '', incorrectAnswers: { 0: '', 1: '', 2: '' } } }))
-
-    // setCards([...cards, ''])
-    // setCards([...cards, <Question deleteCard={deleteCard} number={number} setNewQuizData={setNewQuizData} />])
   }
+
   const deleteCard = (index) => {
     const { [index]: quizData, ...others } = newQuizData
 
     const tempData = Object.values(others).reduce((sum, cur, index) => ({ ...sum, [index + 1]: cur }), {})
-
     setNewQuizData(tempData)
-    // console.log("index: " + index);
-    // const filteredCard = cards.filter((el, elIndex) => index !== elIndex);
-    // console.log(filteredCard);
-    // setCards(filteredCard);
-    // setNumber(index);
   }
 
   const handleSubmit = async () => {
     console.log('newQuizData', Object.values(newQuizData));
-    // const options = {
-    //   method: 'POST',
-    //   url: 'http://localhost:8000/user',
-    //   Headers: {
-    //     'Content-type': 'application/json'
-    //   },
-    //   data: {
-    //     subjectName: newData.subjectName,
-    //     quiz: [newData.quiz]
-    //   }
-    // }
-    // await axios(options).then(res => {
-    //   console.log(res)
-    // });
-    // console.log(newData);
-    // console.log(newQuizData);
-    const quiz =  Object.values(newQuizData).map((el) => Object.values(el.incorrectAnswers));
-    console.log(quiz);
+    const options = {
+      method: 'POST',
+      url: 'http://localhost:8000/quiz',
+      Headers: {
+        'Content-type': 'application/json'
+      },
+      data: {
+        subjectName: newData.subjectName,
+        quiz: Object.values(newQuizData),
+        category: newData.category,
+        difficulty: newData.difficulty,
+        time: newData.time
+      }
+    }
+    await axios(options).then(res => {
+      console.log(res)
+    });
+    // const quiz =  Object.values(newQuizData).map((el) => Object.values(el.incorrectAnswers));
+    // console.log('quiz', quiz);
     const data = { subjectName: newData.subjectName, quiz: Object.values(newQuizData) }
-    //const data = { subjectName: newData.subjectName, quiz: [newQuizData] }
-    console.log(data);
+    console.log('data' ,data);
   }
   // {
   //  0: {question: "bob"}
@@ -76,14 +66,22 @@ const Page = () => {
             type='text' placeholder='Enter a title, like “Chinese HSK4 - Lesson 18: Protect our Mother Earth' className='h-[50px] p-[10px] rounded-[10px]' />
         </div>
         <div className='flex justify-around items-center gap-[10px] w-[100%]'>
-          <button className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]'>Choose Category</button>
-          <button className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]'>Difficulty</button>
+          <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, category: e.target.value}) )}>
+            {categories.map((el, id) => {
+              return (
+                <option key={id} value={el}>{el}</option>
+              )})}
+          </select>
+          <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, difficulty: e.target.value}) )}>
+            <option value='Easy'>Easy</option>
+            <option value='Medium'>Medium</option>
+            <option value='Hard'>Hard</option>
+          </select>
           <div className='flex justify-around items-center p-[5px] text-[#2e3856] font-bold w-[40%] bg-[#FFFFFF] rounded-[10px]'>
-            <h3>Time: </h3>
-            <input placeholder='...' className='p-[10px] w-[70%]' />
+            <h3>Time(min): </h3>
+            <input placeholder='...' className='p-[10px] w-[70%]' onChange={(e) => setNewData((prev) => ({ ...prev, time: Number(e.target.value)}))}/>
           </div>
         </div>
-        {/* {cards.map((card) => card)} */}
         {Object.keys(newQuizData).map((quizIndex, index) => <Question key={`card-${index}`} newQuizData={newQuizData} deleteCard={() => deleteCard(index + 1)} number={quizIndex} setNewQuizData={setNewQuizData} />)}
 
         <div className='bg-[#FFFFFF] m-[10px] flex justify-center items-center h-[7%] text-[#2e3856] hover:text-[#FFCD1F] font-bold rounded-[10px]'>
