@@ -7,7 +7,7 @@ export const getAllUsers = async (req, res) => {
 }
 
 export const getUser = async (req, res) => {
-    const filteredUser = await UserModel.find({ _id: req.params.id });
+    const filteredUser = await UserModel.findOne({ _id: req.params.id });
     res.status(200).json({ status: 'success', data: filteredUser, });
 }
 
@@ -63,3 +63,9 @@ export const deleteUser = async (req, res) => {
         .catch(error => res.json({ error }))
 }
 
+
+export const currentUser = async (req, res) => {
+    const filteredUser = await UserModel.findOne({ _id: req.user.user_id });
+
+    res.status(200).json({ status: 'success', data: filteredUser, });
+}

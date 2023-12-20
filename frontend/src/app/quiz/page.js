@@ -29,7 +29,6 @@ const Quiz = ({ searchParams }) => {
   }
 
   function checkAnswers() {
-    console.log('setT')
     questionsAndAnswers.map((obj) => {
       if (obj.selected === "") return setWarning(true);
       else if (obj.selected === obj.correctAnswer) return setScore((prev) => prev + 1);

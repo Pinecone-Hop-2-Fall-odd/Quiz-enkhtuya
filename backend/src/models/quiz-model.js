@@ -9,9 +9,9 @@ const singleQuiz = new mongoose.Schema({
 
 const quizSchema = new mongoose.Schema({
     subjectName: String,
-    category: String,
+    category: { type: String, required: true},
     time: Number,
-    difficulty: String,
+    difficulty: { type: String, required: true},
     quiz: [singleQuiz],
     createdOn: Date,
 });

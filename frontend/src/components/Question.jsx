@@ -39,8 +39,8 @@ const Question = ({ newQuizData, deleteCard, number, setNewQuizData }) => {
             <div className='flex flex-col p-[10px] justify-start gap-[6px]'>
                 <h4>Incorrect Answers</h4>
                 <input value={quizData.incorrectAnswers[0]} type='text' placeholder='required' className='h-[50px] p-[10px] rounded-[10px]' onChange={(e) => handleQuestionInCorrectAnswer(e, 0)} />
-                <input value={quizData.incorrectAnswers[1]} type='text' placeholder='required' className='h-[50px] p-[10px] rounded-[10px]' onChange={(e) => handleQuestionInCorrectAnswer(e, 1)} />
-                <input value={quizData.incorrectAnswers[2]} type='text' placeholder='required' className='h-[50px] p-[10px] rounded-[10px]' onChange={(e) => handleQuestionInCorrectAnswer(e, 2)} />
+                <input value={quizData.incorrectAnswers[1]} type='text' placeholder='optional' className='h-[50px] p-[10px] rounded-[10px]' onChange={(e) => handleQuestionInCorrectAnswer(e, 1)} />
+                <input value={quizData.incorrectAnswers[2]} type='text' placeholder='optional' className='h-[50px] p-[10px] rounded-[10px]' onChange={(e) => handleQuestionInCorrectAnswer(e, 2)} />
             </div>
         </div>
     )

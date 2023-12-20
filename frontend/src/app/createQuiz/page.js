@@ -1,13 +1,15 @@
 'use client'
 import React, { useState } from 'react'
-import Question from '@/components/Question'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import Question from '@/components/Question'
 
 const Page = () => {
+  const router = useRouter();
   const [number, setNumber] = useState(2);
   const [newData, setNewData] = useState({});
   const [newQuizData, setNewQuizData] = useState({});
-  const categories = ['Choose Category' , 'Home', 'Science', 'Art & Humanities', 'Social science', 'Languages', 'Other'];
+  const categories = ['Science', 'Art & Humanities', 'Social science', 'Languages', 'Other'];
 
   const addCard = () => {
     setNumber(number + 1);
@@ -23,63 +25,48 @@ const Page = () => {
 
   const handleSubmit = async () => {
     console.log('newQuizData', Object.values(newQuizData));
-    const options = {
-      method: 'POST',
-      url: 'http://localhost:8000/quiz',
-      Headers: {
-        'Content-type': 'application/json'
-      },
-      data: {
-        subjectName: newData.subjectName,
-        quiz: Object.values(newQuizData),
-        category: newData.category,
-        difficulty: newData.difficulty,
-        time: newData.time
-      }
-    }
-    await axios(options).then(res => {
-      console.log(res)
-    });
+    await axios.post('http://localhost:8000/quiz', {
+      subjectName: newData.subjectName,
+      quiz: Object.values(newQuizData),
+      category: newData.category,
+      difficulty: newData.difficulty,
+      time: newData.time
+    }).then(res => {console.log(res)});
     // const quiz =  Object.values(newQuizData).map((el) => Object.values(el.incorrectAnswers));
-    // console.log('quiz', quiz);
     const data = { subjectName: newData.subjectName, quiz: Object.values(newQuizData) }
-    console.log('data' ,data);
+    console.log('data', data);
   }
-  // {
-  //  0: {question: "bob"}
-  //  1: {question: "bob"}
-  //  3: {question: "bob"}
-  // }
-
-  // .values => [{question: "bob"}]
-  // .keys => [0, 1, 3]
   return (
     <div className='flex w-full h-screen justify-center items-center bg-[#f6f7fb] p-[5%] overflow-auto'>
       <div className='h-screen w-[65%] p-[20px]'>
         <div className='flex justify-between w-full p-[20px]'>
           <h1 className='text-[#2e3856] font-bold text-[25px]'>Create a new Quiz</h1>
-          <button className='bg-[#2e3856] text-[#FFFFFF] p-[10px] rounded-[6px] hover:bg-[#515972]'>create</button>
+          <div className='flex gap-[10px]'>
+            <button onClick={() => handleSubmit()} className='bg-[#2e3856] text-[#FFFFFF] p-[10px] rounded-[6px] hover:bg-[#515972]'>create</button>
+            <button onClick={() => router.push('/')} className='bg-[#2e3856] text-[#FFFFFF] p-[10px] rounded-[6px] hover:bg-[#515972] font-bold'>x</button>
+          </div>
         </div>
         <div className='flex flex-col p-[10px] justify-start gap-[6px] text-[#2e3856]'>
-          <h4>Subject title</h4>
+          <h4 className='font-bold'>Subject title</h4>
           <input onChange={(e) => setNewData((prev) => ({ ...prev, subjectName: e.target.value }))}
             type='text' placeholder='Enter a title, like “Chinese HSK4 - Lesson 18: Protect our Mother Earth' className='h-[50px] p-[10px] rounded-[10px]' />
         </div>
         <div className='flex justify-around items-center gap-[10px] w-[100%]'>
-          <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, category: e.target.value}) )}>
+          <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, category: e.target.value }))}>
             {categories.map((el, id) => {
               return (
                 <option key={id} value={el}>{el}</option>
-              )})}
+              )
+            })}
           </select>
-          <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, difficulty: e.target.value}) )}>
+          <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, difficulty: e.target.value }))}>
             <option value='Easy'>Easy</option>
             <option value='Medium'>Medium</option>
             <option value='Hard'>Hard</option>
           </select>
           <div className='flex justify-around items-center p-[5px] text-[#2e3856] font-bold w-[40%] bg-[#FFFFFF] rounded-[10px]'>
             <h3>Time(min): </h3>
-            <input placeholder='...' className='p-[10px] w-[70%]' onChange={(e) => setNewData((prev) => ({ ...prev, time: Number(e.target.value)}))}/>
+            <input placeholder='...' className='p-[10px] w-[70%]' onChange={(e) => setNewData((prev) => ({ ...prev, time: Number(e.target.value) }))} />
           </div>
         </div>
         {Object.keys(newQuizData).map((quizIndex, index) => <Question key={`card-${index}`} newQuizData={newQuizData} deleteCard={() => deleteCard(index + 1)} number={quizIndex} setNewQuizData={setNewQuizData} />)}

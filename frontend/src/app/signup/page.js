@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
@@ -9,31 +9,31 @@ const signup = () => {
   const [signupData, setSignupData] = useState({});
   const [showHide, setShowHide] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   //Create User
   const Loading = () => {
     setLoading(!loading);
-    setTimeout(handleSignUp, 2000);
+    setTimeout(handleSignUp, 1000);
   }
 
   const handleSignUp = async () => {
-    const options = {
-      method: 'POST',
-      url: 'http://localhost:8000/user',
-      Headers: {
-        'Content-type': 'application/json'
-      },
-      data: {
-        username: signupData.username,
-        email: signupData.email,
-        password: signupData.password
-      }
-    }
-    await axios(options).then(res => {
-      console.log(res)
-      router.push('/')
-    });
+    await axios.post('http://localhost:8000/user', {
+      username: signupData.username,
+      email: signupData.email,
+      password: signupData.password
+    }).then(res => console.log(res.data.data))
+    .catch(res => alert(res.data.data.message))
   }
+
+  // useEffect(() => {
+  //   if(userData) {
+  //     setLoading(false);
+  //     console.log("userData" , userData)
+  //     localStorage.setItem("uid", userData._id);
+  //     router.push('/');
+  //   }  setUserData(res.data.data)
+  // }, [userData])
   return (
     <>
       {loading ? <div className="bg-[#FFFFFF] text-[#000000] font-bold min-w-screen h-screen flex items-center justify-center">Loading...</div> :

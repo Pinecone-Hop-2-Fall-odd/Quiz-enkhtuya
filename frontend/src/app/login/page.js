@@ -9,34 +9,59 @@ const login = () => {
   const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({});
   const [showHide, setShowHide] = useState(false);
-  const [userData , setUserData] = useState(null)
+  // const [userData , setUserData] = useState(null)
+  // const [token, setToken] = useState(null);
 
   //User Login
   const Loading = () => {
     setLoading(!loading);
-    setTimeout(handleLogin, 2000);
+    setTimeout(handleLogin, 500);
   }
 
   const handleLogin = async () => {
-     await axios.post('http://localhost:8000/login', {
-      email: loginData.email,
-      password: loginData.password
-    }).then(res => setUserData(res.data.data.user))
-    .catch(res => alert(res.response.data.message))
-    
-  }
-  useEffect(() => {
-    if (userData) {
-      setLoading(false);
-      console.log("userData" , userData)
-      localStorage.setItem("uid", userData.data.user._id);
-      router.push('/');
-    } 
-    // else if (userData === ) {
-    // alert('User not found!');
-    // }
-  }, [userData])
+    try {
+      setLoading(true);
 
+      const res = await axios.post('http://localhost:8000/login', {
+        email: loginData.email,
+        password: loginData.password
+      })
+
+      console.log('token', res);
+      localStorage.setItem("token", res.data.token);
+      // .then(res => { console.log('token', res); setToken(res.data.token) })
+      //   .catch(res => alert(res))
+
+      router.push('/');
+      setLoading(true);
+    } catch (err) {
+      alert(err)
+    }
+  }
+
+  // useEffect(() => {
+  //   if (token) {
+  //     setLoading(false);
+
+  //     // localStorage.setItem("uid", userData._id);
+  //     router.push('/');
+  //   }
+  //   // else if (userData === ) {
+  //   // alert('User not found!');
+  //   // }  
+  // }, [token])
+
+  // useEffect(() => {
+  //   if (userData) {
+  //     setLoading(false);
+  //     console.log("userData" , userData)
+  //     localStorage.setItem("uid", userData.data.user._id);
+  //     router.push('/');
+  //   } 
+  //   // else if (userData === ) {
+  //   // alert('User not found!');
+  //   // }   alert(res.response.data.message)   setUserData(res.data.data.user)
+  // }, [userData])
   return (
     <>
       {loading ? <div className="bg-[#FFFFFF] text-[#000000] font-bold min-w-screen h-screen flex items-center justify-center">Loading...</div> :
@@ -68,10 +93,3 @@ const login = () => {
 }
 
 export default login;
-
-/*
-<div className='flex justify-center items-center text-[#000000] font-bold'>
-              <IoIosArrowBack />
-              <h1>Back</h1>
-              </div>
-*/
