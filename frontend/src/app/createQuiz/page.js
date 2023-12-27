@@ -1,7 +1,7 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
 import Question from '@/components/Question'
 
 const Page = () => {
@@ -24,18 +24,18 @@ const Page = () => {
   }
 
   const handleSubmit = async () => {
-    console.log('newQuizData', Object.values(newQuizData));
-    await axios.post('http://localhost:8000/quiz', {
-      subjectName: newData.subjectName,
-      quiz: Object.values(newQuizData),
-      category: newData.category,
-      difficulty: newData.difficulty,
-      time: newData.time
-    }).then(res => {console.log(res)});
-    // const quiz =  Object.values(newQuizData).map((el) => Object.values(el.incorrectAnswers));
-    const data = { subjectName: newData.subjectName, quiz: Object.values(newQuizData) }
-    console.log('data', data);
+    try {
+      const res = await axios.post('http://localhost:8000/quiz', {
+        subjectName: newData.subjectName,
+        quiz: Object.values(newQuizData),
+        category: newData.category,
+        difficulty: newData.difficulty,
+        time: newData.time * 60
+      })
+      console.log(res);
+    } catch (err) { console.log(err) }
   }
+
   return (
     <div className='flex w-full h-screen justify-center items-center bg-[#f6f7fb] p-[5%] overflow-auto'>
       <div className='h-screen w-[65%] p-[20px]'>
@@ -54,9 +54,7 @@ const Page = () => {
         <div className='flex justify-around items-center gap-[10px] w-[100%]'>
           <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, category: e.target.value }))}>
             {categories.map((el, id) => {
-              return (
-                <option key={id} value={el}>{el}</option>
-              )
+              return (<option key={id} value={el}>{el}</option>)
             })}
           </select>
           <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, difficulty: e.target.value }))}>
@@ -83,3 +81,8 @@ const Page = () => {
 }
 
 export default Page;
+
+{/**
+    console.log('newQuizData', Object.values(newQuizData));
+    //if(!newData.subjectName || !newData.category) return alert('uldeechle')
+*/}

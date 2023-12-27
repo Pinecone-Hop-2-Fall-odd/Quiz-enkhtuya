@@ -1,9 +1,9 @@
 'use client'
-import Cards from '@/components/Cards'
-import NavBar from '@/components/NavBar'
+import axios from 'axios'
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import axios from 'axios'
+import Cards from '@/components/Cards'
+import NavBar from '@/components/NavBar'
 
 export default function Home() {
   const router = useRouter();
@@ -24,6 +24,10 @@ export default function Home() {
         .then(res => { setInitialData(res.data.data); setQuizData(res.data.data); })
     }
     fetchData();
+    const token = localStorage.getItem("token");
+    if(!token) {
+      router.push('/login');
+    }
   }, []);
 
   return (

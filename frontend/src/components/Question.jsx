@@ -3,16 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 
 const Question = ({ newQuizData, deleteCard, number, setNewQuizData }) => {
     const quizData = newQuizData[number];
-
-
-    // { question: 'what is' }
-    // {
-    //     0: { question: 'what is', correctAnswe },
-    //     1: { question: "who is" }
-    //     2: { question: "who is" }
-    //     3: { question: "who is" }
-    // }
-
+    
     const handleQuestionName = (e) => {
         setNewQuizData((prev) => ({ ...prev, [number]: { ...prev[number], question: e.target.value } }))
     }

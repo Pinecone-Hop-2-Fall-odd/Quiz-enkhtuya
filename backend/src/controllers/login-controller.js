@@ -29,7 +29,7 @@ export const login = async (req, res) => {
          res.status(200).json({token});
          return;
       } else {
-         res.status(405).json({ message: 'Password not match' })
+         res.status(401).json({ message: 'Password not match' })
          return;
       }
    }

@@ -15,6 +15,14 @@ export const createUser = async (req, res) => {
     try {
         const body = req.body;
 
+        if (body.email === undefined) {
+            res.status(403).json({ message: 'Email required' });
+            return;
+        } else if (body.password === undefined) {
+            res.status(403).json({ message: 'Password required' });
+            return;
+        }
+
         console.log('password', req.body.password)
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
 
@@ -66,6 +74,5 @@ export const deleteUser = async (req, res) => {
 
 export const currentUser = async (req, res) => {
     const filteredUser = await UserModel.findOne({ _id: req.user.user_id });
-
     res.status(200).json({ status: 'success', data: filteredUser, });
 }
