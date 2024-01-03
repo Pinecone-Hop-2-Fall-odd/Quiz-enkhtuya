@@ -24,7 +24,7 @@ export const createQuiz = async (req, res) => {
         res.status(200).json({ status: 'success', data: { newQuiz } });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: 'error' });
+        res.status(500).json({ message: error });
     }
 }
 

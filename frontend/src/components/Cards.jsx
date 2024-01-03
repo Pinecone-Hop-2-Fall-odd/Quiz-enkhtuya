@@ -16,7 +16,7 @@ const Cards = ({ quizData }) => {
           <h6 className='rounded-[30px] bg-[#ecefff] py-[5px] px-[10px]'>{val.quiz.length} questions</h6>
           <div className='flex justify-between items-center gap-[10px] w-[100%]'>
             <div className='flex items-center gap-[10px]'>
-              <RxAvatar className='h-[40px] w-[40px] rounded-[50%] bg-[#586380] text-[#FFFFFF]' />
+              <RxAvatar className='h-[40px] w-[40px] rounded-[50%] ' />
               <p>{val.creator}</p>
             </div>
             <button onClick={() => handleClick(val._id)} className='bg-[#FFCD1F] p-[10px]'>start</button>
