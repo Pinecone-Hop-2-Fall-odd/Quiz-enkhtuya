@@ -33,3 +33,26 @@ export const deleteQuiz = async (req, res) => {
     const deletedData = await QuizModel.findOneAndDelete({ _id: req.params.id })
     res.status(200).json({ status: 'success', data: { deletedData } });
 }
+
+export const checkQuiz = async (req, res) => {
+    const { selectedAnswer } = req.body;
+    const questionNum = selectedAnswer.length;
+    let isPassed = false;
+    let sum = 0;
+    try {
+        selectedAnswer.forEach((obj) => {
+            if (obj.selected === obj.correctAnswer) {
+                isPassed = true
+                sum = sum + 1
+            }
+        });
+        if (isPassed && sum > questionNum/2) {
+            res.status(200).json({ message: "success", score: `${sum}/${questionNum}`});
+        } else {
+            res.status(400).json({ message: "failed", score: `${sum}/${questionNum}` });
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: err });
+    }
+}

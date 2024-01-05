@@ -11,10 +11,6 @@ const Quiz = ({ searchParams }) => {
   const [showResult, setShowResult] = useState(false);
   const [warning, setWarning] = useState(false);
 
-  const [selectedId, setSelectedId] = useState(null);
-  const [index, setIndex] = useState(0);
-  const [next, setNext] = useState(false);
-
   function shuffle(array) {
     for (let currentIndex = array.length - 1; currentIndex > 0; currentIndex--) {
       let randomIndex = Math.floor(Math.random() * currentIndex);
@@ -33,30 +29,49 @@ const Quiz = ({ searchParams }) => {
   }
 
   function checkAnswers() {
-    questionsAndAnswers.map((obj) => {
-      if (obj.selected === "") return setWarning(true);
-      else if (obj.selected === obj.correctAnswer) return setScore((prev) => prev + 1);
-    });
-    setShowResult(!showResult)
+    const isNotAnswered = questionsAndAnswers.some((answer) => answer.selected === "");
+    if (isNotAnswered) return setWarning(true);
+    else if (!isNotAnswered) {
+      questionsAndAnswers.find((answer) => {
+        if (answer.selected === answer.correctAnswer) return setScore((prev) => prev + 1);
+      })
+      setWarning(false)
+      setShowResult(!showResult)
+    }
+    sendAnswers();
+  }
+
+  async function sendAnswers() {
+    try{
+      const { data } = await axios.post(`http://localhost:8000/quiz/${quizId}`, {
+        selectedAnswer: questionsAndAnswers.filter((answer) => answer.selected)
+      })
+      console.log(data);
+      alert(`${data.message} Your score:${data.score}`)
+    } catch(err) {
+      alert(`${err.response.data.message} Your score:${err.response.data.score}`)
+      console.log(err)
+    }
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios.get('http://localhost:8000/quizzes')
-        .then(res => {
-          const quizData = res.data.data.filter((el) => el._id === quizId);
+        try{
+          const res = await axios.get(`http://localhost:8000/quiz/${quizId}`);
+          const quizData = res.data.data[0];
           setQuestionsAndAnswers(
-            quizData[0]?.quiz.map((el, idx) => {
+            quizData?.quiz.map((el, idx) => {
               return ({
-                subjectName: quizData[0]?.subjectName,
+                subjectName: quizData?.subjectName,
                 question: el.question,
                 allAnswers: shuffle([el.correctAnswer, ...Object.values(el.incorrectAnswers)]),
                 correctAnswer: el.correctAnswer,
-                selected: "",
-                idx: idx
+                selected: ""
               })
             }));
-        })
+        } catch(err) {
+          console.log(err);
+        }
     }
     fetchData();
   }, []);
@@ -66,10 +81,6 @@ const Quiz = ({ searchParams }) => {
     setScore(0);
     setWarning(false);
     setShowResult(false);
-  }
-
-  function handleFlashcards(index) {
-    setSelectedId(index === selectedId ? null : index);
   }
 
   return (
@@ -92,39 +103,21 @@ const Quiz = ({ searchParams }) => {
                   key={index}
                   style={{
                     display: "flex", justifyContent: "center", alignItems: "center", padding: "5px",
-                    backgroundColor: `${showResult ? (answer === val.correctAnswer ? "green" : answer === val.selected ? "red" : "#427FE6") : (answer === val.selected ? 'green' : '#427FE6')}`, width: "240px",
+                    backgroundColor: `${showResult ? (answer === val.correctAnswer ? "#90B089" : answer === val.selected ? "#D65648" : "#D7D7D7") : (answer === val.selected ? '#90B089' : '#D7D7D7')}`, width: "240px",
                   }}>
                   {answer}</button>))}
             </div>
           </div>))}
         {warning && <h1>Some questions weren't answered!!</h1>}
-        {showResult ?
+        {showResult &&
           (<div className="flex flex-col justify-center items-center gap-[10px]">
             <h1>Your score: {score}/{questionsAndAnswers.length}</h1>
             <button className="bg-[#2475B7] p-[10px] text-[#FFFFFF]" onClick={() => again()}>Again</button>
-          </div>) : ""}
+          </div>) }
         {!showResult && (<button onClick={() => checkAnswers()} className="bg-[#2475B7] p-[10px] text-[#FFFFFF]">Submit</button>)}
-
-        {/**flashcards */}
-        <div className="w-[90%] h-[60%] p-[10px] gap-[10px] flex flex-wrap">
-          {questionsAndAnswers?.map((val, index) => (
-            <div key={index} className="w-[250px] h-[120px] flex justify-center items-center bg-[#FFFFFF] p-[10px]" onClick={() => handleFlashcards(val.idx)}>
-              {selectedId === index ? (<h1 className="font-bold text-blue-600">{val.correctAnswer}</h1>) : (<h1>{val.question}</h1>)}
-            </div>
-          ))}
-        </div>
-
-        <div className="w-[90%] h-[60%] p-[10px] gap-[10px] flex flex-wrap">
-          <button onClick={() => setIndex((prev) => index - 1)}>-1</button>
-          <div className="w-[250px] h-[120px] flex justify-center items-center bg-[#FFFFFF] p-[10px]" onClick={() => setNext(!next)}>
-            {next ? (<h1 className="font-bold text-blue-600">{questionsAndAnswers[index]?.correctAnswer}</h1>) : (<h1>{questionsAndAnswers[index]?.question}</h1>)}
-          </div>
-          <button onClick={() => setIndex((prev) => index + 1)}>+1</button>
-        </div>
-
       </div>
     </div>
   );
 };
-
+//red-#D65648 gray-D7D7D7 green-90B089
 export default Quiz;

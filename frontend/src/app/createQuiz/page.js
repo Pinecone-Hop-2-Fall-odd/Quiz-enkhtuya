@@ -63,7 +63,7 @@ const Page = () => {
             <option value='Hard'>Hard</option>
           </select>
           <div className='flex justify-around items-center p-[5px] text-[#2e3856] font-bold w-[40%] bg-[#FFFFFF] rounded-[10px]'>
-            <h3>Time(min): </h3>
+            <h3>Time limit (min): </h3>
             <input placeholder='...' className='p-[10px] w-[70%]' onChange={(e) => setNewData((prev) => ({ ...prev, time: Number(e.target.value) }))} />
           </div>
         </div>

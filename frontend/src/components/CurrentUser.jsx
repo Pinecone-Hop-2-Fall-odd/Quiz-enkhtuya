@@ -16,6 +16,7 @@ const CurrentUser = ({ currentUser, setCurrentUser }) => {
                 <RxAvatar className='h-[40px] w-[40px] rounded-[50%] text-[#586380]' />
                 <div onClick={() => router.push('/profile')} className='text-[#586380] font-bold'>{currentUser?.username}</div>
             </div>
+            <button onClick={() => router.push('/createQuiz')} className='bg-[#206be5] p-[10px] rounded-[10px] text-[#FFFFFF]'>Create Quiz! </button>
             <button onClick={handleLogOut} className='py-[10px] px-[15px] justify-center items-center bg-[#FFCD1F] hover:bg-[#FFDA56] text-[#000000] rounded-[10px]'>Log out</button>
         </div>
     )
