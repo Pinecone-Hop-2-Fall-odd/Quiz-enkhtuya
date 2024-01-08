@@ -44,7 +44,8 @@ const signup = () => {
 
           <h3>password</h3>
           <div className='bg-[#ffffff] w-[450px] h-[5%] p-[20px] flex justify-between items-center'>
-            <input type={showHide ? 'text' : 'password'} placeholder='••••••••' onChange={(e) => setSignupData((prev) => ({ ...prev, password: e.target.value }))} />
+            <input type={showHide ? 'text' : 'password'} placeholder='••••••••' onChange={(e) => setSignupData((prev) => ({ ...prev, password: e.target.value }))} 
+            onKeyDown={(e) => {if(e.key === 'Enter') return handleSignUp()}}/>
             <button onClick={() => setShowHide(!showHide)}>{showHide ? 'Show' : 'Hide'}</button>
           </div>
           <button onClick={() => handleSignUp()} className='bg-[#586380] w-[450px] h-[5%] p-[15px] text-[#FFFFFF] mt-[20px]'>Sign up</button>

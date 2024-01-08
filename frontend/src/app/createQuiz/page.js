@@ -1,7 +1,7 @@
 'use client'
-import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import React, { useState} from 'react'
 import Question from '@/components/Question'
 
 const Page = () => {
@@ -9,7 +9,8 @@ const Page = () => {
   const [number, setNumber] = useState(2);
   const [newData, setNewData] = useState({});
   const [newQuizData, setNewQuizData] = useState({});
-  const categories = ['Science', 'Art & Humanities', 'Social science', 'Languages', 'Other'];
+  const categories = ['Choose a Category', 'Science', 'Art & Humanities', 'Social science', 'Languages', 'Other'];
+  const difficultyLevel = ['Difficulty Level', 'easy', 'medium', 'hard'];
 
   const addCard = () => {
     setNumber(number + 1);
@@ -33,7 +34,7 @@ const Page = () => {
         time: newData.time * 60
       })
       console.log(res);
-    } catch (err) { console.log(err) }
+    } catch (err) { console.log(err); console.log(Object.keys(err.response.data.message.errors)); alert(`Quiz must have ${Object.keys(err.response.data.message.errors)}`)}
   }
 
   return (
@@ -52,19 +53,15 @@ const Page = () => {
             type='text' placeholder='Enter a title, like “Chinese HSK4 - Lesson 18: Protect our Mother Earth' className='h-[50px] p-[10px] rounded-[10px]' />
         </div>
         <div className='flex justify-around items-center gap-[10px] w-[100%]'>
-          <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, category: e.target.value }))}>
-            {categories.map((el, id) => {
-              return (<option key={id} value={el}>{el}</option>)
-            })}
+          <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[24%]' onChange={(e) => setNewData((prev) => ({ ...prev, category: e.target.value }))}>
+            {categories.map((el, id) => { return (<option key={id} value={el}>{el}</option>)})}
           </select>
           <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, difficulty: e.target.value }))}>
-            <option value='Easy'>Easy</option>
-            <option value='Medium'>Medium</option>
-            <option value='Hard'>Hard</option>
+            {difficultyLevel.map((el, id) => { return (<option key={id} value={el}>{el}</option>)})}
           </select>
           <div className='flex justify-around items-center p-[5px] text-[#2e3856] font-bold w-[40%] bg-[#FFFFFF] rounded-[10px]'>
-            <h3>Time limit (min): </h3>
-            <input placeholder='...' className='p-[10px] w-[70%]' onChange={(e) => setNewData((prev) => ({ ...prev, time: Number(e.target.value) }))} />
+            <h3>Time limit: </h3>
+            <input placeholder='...minute' className='p-[10px] w-[70%]' onChange={(e) => setNewData((prev) => ({ ...prev, time: Number(e.target.value) }))} />
           </div>
         </div>
         {Object.keys(newQuizData).map((quizIndex, index) => <Question key={`card-${index}`} newQuizData={newQuizData} deleteCard={() => deleteCard(index + 1)} number={quizIndex} setNewQuizData={setNewQuizData} />)}
@@ -81,8 +78,3 @@ const Page = () => {
 }
 
 export default Page;
-
-{/**
-    console.log('newQuizData', Object.values(newQuizData));
-    //if(!newData.subjectName || !newData.category) return alert('uldeechle')
-*/}

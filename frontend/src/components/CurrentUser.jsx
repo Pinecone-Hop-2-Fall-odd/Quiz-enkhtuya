@@ -1,15 +1,29 @@
 'use client'
 import React from 'react'
+import axios from 'axios';
 import { RxAvatar } from "react-icons/rx";
 import { useRouter } from 'next/navigation';
+import { UserDataContext } from '@/app/layout';
+import { useEffect, useState, useContext } from 'react'
 
-const CurrentUser = ({ currentUser, setCurrentUser }) => {
+const CurrentUser = () => {
     const router = useRouter();
+    const [currentUser, setCurrentUser] = useState(null)
+    const { token } = useContext(UserDataContext);
     const handleLogOut = () => {
         localStorage.removeItem("token");
         setCurrentUser(null);
         router.push('/login');
     }
+    const getCurrentUser = async () => {
+        try { const { data } = await axios.get(`http://localhost:8000/currentUser`, { headers: { "token": token } })
+            setCurrentUser(data.data)
+        } catch (err) { console.error(err) }
+    }
+
+    useEffect(() => {
+        if (token) { getCurrentUser() }
+    }, [token])
     return (
         <div className='flex justify-center items-center gap-[25px]'>
             <div className='flex justify-center items-center gap-[5px] hover:bg-[#E0E3EC] p-[5px] rounded-[10px]'>

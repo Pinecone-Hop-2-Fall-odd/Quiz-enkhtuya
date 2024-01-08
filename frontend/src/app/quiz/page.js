@@ -1,7 +1,7 @@
 "use client";
+import axios from 'axios'
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from 'axios'
 
 const Quiz = ({ searchParams }) => {
   const router = useRouter();
@@ -42,13 +42,13 @@ const Quiz = ({ searchParams }) => {
   }
 
   async function sendAnswers() {
-    try{
+    try {
       const { data } = await axios.post(`http://localhost:8000/quiz/${quizId}`, {
         selectedAnswer: questionsAndAnswers.filter((answer) => answer.selected)
       })
       console.log(data);
       alert(`${data.message} Your score:${data.score}`)
-    } catch(err) {
+    } catch (err) {
       alert(`${err.response.data.message} Your score:${err.response.data.score}`)
       console.log(err)
     }
@@ -56,22 +56,20 @@ const Quiz = ({ searchParams }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-        try{
-          const res = await axios.get(`http://localhost:8000/quiz/${quizId}`);
-          const quizData = res.data.data[0];
-          setQuestionsAndAnswers(
-            quizData?.quiz.map((el, idx) => {
-              return ({
-                subjectName: quizData?.subjectName,
-                question: el.question,
-                allAnswers: shuffle([el.correctAnswer, ...Object.values(el.incorrectAnswers)]),
-                correctAnswer: el.correctAnswer,
-                selected: ""
-              })
-            }));
-        } catch(err) {
-          console.log(err);
-        }
+      try {
+        const res = await axios.get(`http://localhost:8000/quiz/${quizId}`);
+        const quizData = res.data.data[0];
+        setQuestionsAndAnswers(
+          quizData?.quiz.map((el, idx) => {
+            return ({
+              subjectName: quizData?.subjectName,
+              question: el.question,
+              allAnswers: shuffle([el.correctAnswer, ...Object.values(el.incorrectAnswers)]),
+              correctAnswer: el.correctAnswer,
+              selected: ""
+            })
+          }));
+      } catch (err) {console.log(err)}
     }
     fetchData();
   }, []);
@@ -88,10 +86,8 @@ const Quiz = ({ searchParams }) => {
       <div className="flex flex-col items-center p-[15px] gap-[20px] ">
         <div className="flex justify-between items-center w-full p-[10px]">
           <h1 className="font-bold text-[20px]">Quiz: {questionsAndAnswers[0]?.subjectName}</h1>
-          <button
-            onClick={() => router.push("/")}
-            className="bg-[#DC2F1E] h-[40px] w-[40px] p-[10px] text-[#FFFFFF] flex justify-center items-center font-bold"
-          >x</button>
+          <button onClick={() => router.push("/")}
+            className="bg-[#DC2F1E] h-[40px] w-[40px] p-[10px] text-[#FFFFFF] flex justify-center items-center font-bold">x</button>
         </div>
         {questionsAndAnswers?.map((val, index) => (
           <div key={index} className="flex flex-col bg-[#FFFFFF] w-[900px] h-[300px] p-[5%] justify-center items-center gap-[10px]">
@@ -99,21 +95,18 @@ const Quiz = ({ searchParams }) => {
             <h3>{val.question}</h3>
             <div className="gap-[20px] grid grid-cols-2">
               {val.allAnswers.map((answer, index) => (
-                <button onClick={() => handleSelect(answer, val.question)}
-                  key={index}
+                <button onClick={() => handleSelect(answer, val.question)} key={index}
                   style={{
                     display: "flex", justifyContent: "center", alignItems: "center", padding: "5px",
                     backgroundColor: `${showResult ? (answer === val.correctAnswer ? "#90B089" : answer === val.selected ? "#D65648" : "#D7D7D7") : (answer === val.selected ? '#90B089' : '#D7D7D7')}`, width: "240px",
-                  }}>
-                  {answer}</button>))}
+                  }}>{answer}</button>))}
             </div>
           </div>))}
         {warning && <h1>Some questions weren't answered!!</h1>}
-        {showResult &&
-          (<div className="flex flex-col justify-center items-center gap-[10px]">
+        {showResult && (<div className="flex flex-col justify-center items-center gap-[10px]">
             <h1>Your score: {score}/{questionsAndAnswers.length}</h1>
             <button className="bg-[#2475B7] p-[10px] text-[#FFFFFF]" onClick={() => again()}>Again</button>
-          </div>) }
+          </div>)}
         {!showResult && (<button onClick={() => checkAnswers()} className="bg-[#2475B7] p-[10px] text-[#FFFFFF]">Submit</button>)}
       </div>
     </div>

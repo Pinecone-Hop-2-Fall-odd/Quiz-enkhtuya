@@ -1,11 +1,14 @@
 'use client'
 import React from 'react'
 import { useRouter } from 'next/navigation';
+import { UserDataContext } from '@/app/layout';
+import { useContext } from 'react';
 import { RxAvatar } from "react-icons/rx";
 import { AiFillFlag } from "react-icons/ai";
 import { MdCreateNewFolder } from "react-icons/md";
 
 const profile = () => {
+    const { username } = useContext(UserDataContext);
     const router = useRouter();
     return (
         <div className='bg-[#f4f5f9] min-h-screen min-w-screen flex flex-col justify-center items-center'>
@@ -36,7 +39,7 @@ const profile = () => {
                         <button className='p-[5px] border-2'>Edit</button>
                     </div>
                     <div className='flex justify-between items-center'>
-                        <h1><span className='text-[#61687e]'>username:</span> dukaDD</h1>
+                        <h1><span className='text-[#61687e]'>username:</span> {username}</h1>
                         <h1><span className='text-[#61687e]'>Email:</span> dulamsurenD@gmail.com</h1>
                     </div>
                 </div>

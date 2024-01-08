@@ -42,7 +42,8 @@ const login = () => {
 
           <h3>password</h3>
           <div className='bg-[#ffffff] w-[450px] h-[5%] p-[20px] flex justify-between items-center'>
-            <input type={showHide ? 'text' : 'password'} placeholder='••••••••' onChange={(e) => setLoginData((prev) => ({ ...prev, password: e.target.value }))}/>
+            <input type={showHide ? 'text' : 'password'} placeholder='••••••••' onChange={(e) => setLoginData((prev) => ({ ...prev, password: e.target.value }))}
+            onKeyDown={(e) => {if(e.key === 'Enter') return handleLogin()}}/>
             <button onClick={() => setShowHide(!showHide)}>{showHide ? 'Show' : 'Hide'}</button>
           </div>
           <button onClick={() => handleLogin()} className='bg-[#586380] w-[450px] h-[5%] p-[15px] text-[#FFFFFF] mt-[20px]'>Log in</button>
@@ -52,5 +53,4 @@ const login = () => {
     </main>
   )
 }
-
 export default login;

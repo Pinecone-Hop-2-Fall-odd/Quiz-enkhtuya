@@ -6,7 +6,8 @@ import { RxAvatar } from "react-icons/rx";
 const Cards = ({ quizData }) => {
   const router = useRouter();
   const handleClick = (QuizID) => {
-    router.push(`/quiz?quizId=` + QuizID);
+    // router.push(`/quiz?quizId=` + QuizID);
+    router.push(`/preview?quizId=` + QuizID);
   }
   return (
     <div className='flex flex-wrap py-[10px] px-[40px] gap-[30px] mt-[40px]'>
