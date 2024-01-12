@@ -2,6 +2,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Timer from '@/components/Timer';
 
 const Quiz = ({ searchParams }) => {
   const router = useRouter();
@@ -43,7 +44,7 @@ const Quiz = ({ searchParams }) => {
 
   async function sendAnswers() {
     try {
-      const { data } = await axios.post(`http://localhost:8000/quiz/${quizId}`, {
+      const { data } = await axios.post(`https://backend-one-blush-69.vercel.app/quiz/${quizId}`, {
         selectedAnswer: questionsAndAnswers.filter((answer) => answer.selected)
       })
       console.log(data);
@@ -57,7 +58,7 @@ const Quiz = ({ searchParams }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/quiz/${quizId}`);
+        const res = await axios.get(`https://backend-one-blush-69.vercel.app/quiz/${quizId}`);
         const quizData = res.data.data[0];
         setQuestionsAndAnswers(
           quizData?.quiz.map((el, idx) => {
@@ -86,6 +87,7 @@ const Quiz = ({ searchParams }) => {
       <div className="flex flex-col items-center p-[15px] gap-[20px] ">
         <div className="flex justify-between items-center w-full p-[10px]">
           <h1 className="font-bold text-[20px]">Quiz: {questionsAndAnswers[0]?.subjectName}</h1>
+          {/* <Timer seconds={4}/> */}
           <button onClick={() => router.push("/")}
             className="bg-[#DC2F1E] h-[40px] w-[40px] p-[10px] text-[#FFFFFF] flex justify-center items-center font-bold">x</button>
         </div>

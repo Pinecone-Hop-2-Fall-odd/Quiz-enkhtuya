@@ -1,7 +1,8 @@
 'use client'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import React, { useState} from 'react'
+import { UserDataContext } from '@/app/layout';
+import { useEffect, useState, useContext } from 'react';
 import Question from '@/components/Question'
 
 const Page = () => {
@@ -19,14 +20,13 @@ const Page = () => {
 
   const deleteCard = (index) => {
     const { [index]: quizData, ...others } = newQuizData
-
     const tempData = Object.values(others).reduce((sum, cur, index) => ({ ...sum, [index + 1]: cur }), {})
     setNewQuizData(tempData)
   }
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('http://localhost:8000/quiz', {
+      const res = await axios.post('https://backend-one-blush-69.vercel.app/quiz', {
         subjectName: newData.subjectName,
         quiz: Object.values(newQuizData),
         category: newData.category,

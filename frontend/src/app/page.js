@@ -9,7 +9,7 @@ export default function Home() {
   const [initialData, setInitialData] = useState();
   const [quizData, setQuizData] = useState([]);
   const [index, setIndex] = useState(0);
-  const { token } = useContext(UserDataContext);
+  const { token, username } = useContext(UserDataContext);
   const handleClick = (idx, category) => {
     setIndex(idx);
     if (category !== 'Home') {
@@ -20,8 +20,9 @@ export default function Home() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/quizzes', { headers: { "token": token } })
+      const res = await axios.get('https://backend-one-blush-69.vercel.app/quizzes', { headers: { "token": token } })
       setInitialData(res.data.data); setQuizData(res.data.data);
+      console.log(username)
     } catch (err) { console.log(err) }
   }
 

@@ -16,8 +16,9 @@ const CurrentUser = () => {
         router.push('/login');
     }
     const getCurrentUser = async () => {
-        try { const { data } = await axios.get(`http://localhost:8000/currentUser`, { headers: { "token": token } })
+        try { const { data } = await axios.get(`https://backend-one-blush-69.vercel.app/currentUser`, { headers: { "token": token } })
             setCurrentUser(data.data)
+            console.log(data)
         } catch (err) { console.error(err) }
     }
 

@@ -37,7 +37,6 @@ const NavBar = ({ index, handleClick, setQuizData, initialData }) => {
               </div>)}
         </div>
       </div>
-
       <div className='flex min-h-[5%] w-full justify-between items-center p-[10px] px-[5%] gap-[15px]'>
         {categories.map((el, idx) => (
           <button onClick={() => handleClick(idx, el.name)} key={idx} style={{ color: index === idx ? '#206be5' : '#586380' }} className='flex flex-col justify-center items-center p-[5px] text-[#586380]'>

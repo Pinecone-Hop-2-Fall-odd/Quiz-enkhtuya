@@ -24,14 +24,14 @@ export default function RootLayout({ children }) {
       if (window) {
         const localToken = localStorage.getItem("token");
         if (localToken === null) return router.push('/login')
-        // else return setToken(localToken)
         else if (localToken) {
           setToken(localToken);
           if (token) {
-            const res = await axios.get(`http://localhost:8000/currentUser`, { headers: { "token": token } })
-            setUsername(res.data.username); 
+            const res = await axios.get(`https://backend-one-blush-69.vercel.app/currentUser`, { headers: { "token": token } })
+            setUsername(res.data.username);
           }
         }
+        else return setToken(localToken)
       }
     } catch (err) { console.log(err) }
   }
@@ -40,14 +40,6 @@ export default function RootLayout({ children }) {
     checkToken();
   }, [])
 
-  // const getUserData = async () => {
-  //   try {
-  //     if (token) {
-  //       const { data } = await axios.get(`http://localhost:8000/currentUser`, { headers: { "token": token } })
-  //       console.log(data)
-  //     }
-  //   } catch (err) { console.error(err) }
-  // }
   return (
     <html lang="en">
       <body>
