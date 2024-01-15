@@ -12,8 +12,8 @@ const login = () => {
   //User Login
   const handleLogin = async () => {
     try {
-      // const res = await axios.post('http://localhost:8000/login', {
-        const res = await axios.post('https://backend-one-blush-69.vercel.app/login', {
+      const res = await axios.post('http://localhost:8000/login', {
+        // const res = await axios.post('https://backend-one-blush-69.vercel.app/login', {
         email: loginData.email,
         password: loginData.password
       })

@@ -1,12 +1,15 @@
 "use client";
 import axios from 'axios'
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/navigation";
+import { UserDataContext } from '@/app/layout';
 import Timer from '@/components/Timer';
 
 const Quiz = ({ searchParams }) => {
   const router = useRouter();
   const quizId = searchParams.quizId;
+  const { username } = useContext(UserDataContext);
+
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState([]);
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
@@ -21,12 +24,12 @@ const Quiz = ({ searchParams }) => {
   }
 
   function handleSelect(answer, currentQuestion) {
-    console.log(currentQuestion, answer);
+    // console.log(currentQuestion, answer);
     setQuestionsAndAnswers(
       questionsAndAnswers.map((obj) => {
         return obj.question === currentQuestion ? { ...obj, selected: answer } : obj
       }));
-    console.log(questionsAndAnswers);
+    // console.log(questionsAndAnswers);
   }
 
   function checkAnswers() {
@@ -44,8 +47,8 @@ const Quiz = ({ searchParams }) => {
 
   async function sendAnswers() {
     try {
-      const { data } = await axios.post(`https://backend-one-blush-69.vercel.app/quiz/${quizId}`, {
-        selectedAnswer: questionsAndAnswers.filter((answer) => answer.selected)
+      const { data } = await axios.post(`http://localhost:8000/quiz/${quizId}`, {
+        selectedAnswer: questionsAndAnswers.filter((answer) => answer.selected), username: username
       })
       console.log(data);
       alert(`${data.message} Your score:${data.score}`)

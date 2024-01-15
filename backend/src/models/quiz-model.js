@@ -24,6 +24,7 @@ const quizSchema = new mongoose.Schema({
         }
     },
     quiz: [singleQuiz],
+    creator: String,
     createdOn: Date,
 });
 

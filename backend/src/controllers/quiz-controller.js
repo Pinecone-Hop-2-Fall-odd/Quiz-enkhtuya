@@ -1,4 +1,5 @@
 import { QuizModel } from "../models/quiz-model.js";
+import { UserModel } from "../models/user-model.js";
 
 export const getAllQuizzes = async (req, res) => {
     const quizzes_data = await QuizModel.find({});
@@ -35,8 +36,9 @@ export const deleteQuiz = async (req, res) => {
 }
 
 export const checkQuiz = async (req, res) => {
-    const { selectedAnswer } = req.body;
+    const { selectedAnswer, username } = req.body;
     const questionNum = selectedAnswer.length;
+    const { passedQuiz, _id } = await UserModel.findOne({ username })
     let isPassed = false;
     let sum = 0;
     try {
@@ -46,10 +48,11 @@ export const checkQuiz = async (req, res) => {
                 sum = sum + 1
             }
         });
-        if (isPassed && sum > questionNum/2) {
-            res.status(200).json({ message: "success", score: `${sum}/${questionNum}`});
+        if (isPassed && sum > questionNum / 2) {
+            await UserModel.findByIdAndUpdate({ _id: _id }, { passedQuiz: passedQuiz + 1 })
+            res.status(200).json({ message: "success", score: `${sum}/${questionNum}` });
         } else {
-            res.status(400).json({ message: "failed", score: `${sum}/${questionNum}` });
+            return res.status(400).json({ message: "failed", score: `${sum}/${questionNum}` });
         }
     } catch (err) {
         console.log(err);

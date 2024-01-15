@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { UserDataContext } from '@/app/layout';
 import { useContext } from 'react';
@@ -10,12 +10,15 @@ import { MdCreateNewFolder } from "react-icons/md";
 const profile = () => {
     const { username } = useContext(UserDataContext);
     const router = useRouter();
+    const [img, setImg] = useState(null);
     return (
         <div className='bg-[#f4f5f9] min-h-screen min-w-screen flex flex-col justify-center items-center'>
             {/* <h1 className='font-bold text-[30px] '>Edit Profile</h1> */}
             <div className='bg-[#FFFFFF] p-[30px] h-[80%] w-[70%] rounded-[20px] flex flex-col gap-y-[35px]'>
                 <div className='flex gap-[20px] p-[10px] justify-around items-center'>
-                    <RxAvatar className='h-[150px] w-[150px] rounded-[50%] text-[#586380]' />
+                    {img && <img src={URL.createObjectURL(img)} style={{borderRadius: '50%', color: '#586380', width: '100px', height: '100px'}}/>}
+                    {/* <RxAvatar className='h-[150px] w-[150px] rounded-[50%] text-[#586380]' /> */}
+                    <input type='file' accept='image/*' id='profilePi' onChange={(e) => setImg(e.target.files[0])} />
                     <>
                         <div className='flex gap-[10px] justify-center items-center'>
                             <AiFillFlag className='h-[40px] w-[40px]' />

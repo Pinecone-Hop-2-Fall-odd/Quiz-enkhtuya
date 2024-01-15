@@ -2,11 +2,12 @@
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { UserDataContext } from '@/app/layout';
-import { useEffect, useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Question from '@/components/Question'
 
 const Page = () => {
   const router = useRouter();
+  const { username } = useContext(UserDataContext);
   const [number, setNumber] = useState(2);
   const [newData, setNewData] = useState({});
   const [newQuizData, setNewQuizData] = useState({});
@@ -26,15 +27,16 @@ const Page = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('https://backend-one-blush-69.vercel.app/quiz', {
+        const res = await axios.post('http://localhost:8000/quiz', {
         subjectName: newData.subjectName,
         quiz: Object.values(newQuizData),
         category: newData.category,
         difficulty: newData.difficulty,
-        time: newData.time * 60
+        time: newData.time * 60,
+        // creator: username
       })
       console.log(res);
-    } catch (err) { console.log(err); console.log(Object.keys(err.response.data.message.errors)); alert(`Quiz must have ${Object.keys(err.response.data.message.errors)}`)}
+    } catch (err) { console.log(err); alert(`Quiz must have ${Object.keys(err.response.data.message.errors)}`) }
   }
 
   return (
@@ -54,10 +56,10 @@ const Page = () => {
         </div>
         <div className='flex justify-around items-center gap-[10px] w-[100%]'>
           <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[24%]' onChange={(e) => setNewData((prev) => ({ ...prev, category: e.target.value }))}>
-            {categories.map((el, id) => { return (<option key={id} value={el}>{el}</option>)})}
+            {categories.map((el, id) => { return (<option key={id} value={el}>{el}</option>) })}
           </select>
           <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[20%]' onChange={(e) => setNewData((prev) => ({ ...prev, difficulty: e.target.value }))}>
-            {difficultyLevel.map((el, id) => { return (<option key={id} value={el}>{el}</option>)})}
+            {difficultyLevel.map((el, id) => { return (<option key={id} value={el}>{el}</option>) })}
           </select>
           <div className='flex justify-around items-center p-[5px] text-[#2e3856] font-bold w-[40%] bg-[#FFFFFF] rounded-[10px]'>
             <h3>Time limit: </h3>

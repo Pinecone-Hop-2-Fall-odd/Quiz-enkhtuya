@@ -25,7 +25,7 @@ export const login = async (req, res) => {
          const token = jwt.sign(
             { user_id: filteredUser._id, email: filteredUser.email },
             "PrivateKey",
-            { expiresIn: "2h", }
+            { expiresIn: "1d", }
          );
 
          const transporter = nodemailer.createTransport({
