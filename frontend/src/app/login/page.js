@@ -12,8 +12,8 @@ const login = () => {
   //User Login
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://localhost:8000/login', {
-        // const res = await axios.post('https://backend-one-blush-69.vercel.app/login', {
+      // const res = await axios.post('http://localhost:8000/login', {
+        const res = await axios.post('https://backend-one-blush-69.vercel.app/login', {
         email: loginData.email,
         password: loginData.password
       })
@@ -39,12 +39,12 @@ const login = () => {
             <button onClick={() => router.push(`/signup`)} className='py-[10px] px-[15px] justify-center items-center text-[#586380] font-bold rounded-[10px]'>Sign up</button>
           </div>
           <h3>email</h3>
-          <input type='text' placeholder='Enter email address' className='w-[450px] h-[5%] p-[20px]' onChange={(e) => setLoginData((prev) => ({ ...prev, email: e.target.value }))} />
+          <input type='text' placeholder='Enter email address' className='w-[450px] h-[5%] p-[20px] outline-none' onChange={(e) => setLoginData((prev) => ({ ...prev, email: e.target.value }))} />
 
           <h3>password</h3>
           <div className='bg-[#ffffff] w-[450px] h-[5%] p-[20px] flex justify-between items-center'>
             <input type={showHide ? 'text' : 'password'} placeholder='••••••••' onChange={(e) => setLoginData((prev) => ({ ...prev, password: e.target.value }))}
-            onKeyDown={(e) => {if(e.key === 'Enter') return handleLogin()}}/>
+            onKeyDown={(e) => {if(e.key === 'Enter') return handleLogin()}} className='outline-none'/>
             <button onClick={() => setShowHide(!showHide)}>{showHide ? 'Show' : 'Hide'}</button>
           </div>
           <button onClick={() => handleLogin()} className='bg-[#586380] w-[450px] h-[5%] p-[15px] text-[#FFFFFF] mt-[20px]'>Log in</button>

@@ -13,16 +13,21 @@ export const getQuiz = async (req, res) => {
 
 export const createQuiz = async (req, res) => {
     try {
-        const body = req.body
+        const { subjectName, category, difficulty, time, quiz, creator} = req.body
+        const { createdQuiz, _id } = await UserModel.findOne({ creator })
+        createdQuiz =+ 1;
 
         const newQuiz = await QuizModel.create({
-            subjectName: body.subjectName,
-            category: body.category,
-            difficulty: body.difficulty,
-            time: body.time,
-            quiz: body.quiz
+            subjectName: subjectName,
+            category: category,
+            difficulty: difficulty,
+            time: time,
+            quiz: quiz,
+            creator: creator
         });
-        res.status(200).json({ status: 'success', data: { newQuiz } });
+
+        await UserModel.findByIdAndUpdate({ _id: _id}, { createdQuiz: createdQuiz })
+        res.status(201).json({ status: 'success', data: { newQuiz } });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error });
@@ -54,6 +59,25 @@ export const checkQuiz = async (req, res) => {
         } else {
             return res.status(400).json({ message: "failed", score: `${sum}/${questionNum}` });
         }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: err });
+    }
+}
+
+export const updateQuiz = async (req, res) => {
+    try {
+        const body = req.body;
+
+        const editedQuiz = await QuizModel.findByIdAndUpdate({ _id: req.params.id }, {
+            subjectName: body.subjectName,
+            category: body.category,
+            difficulty: body.difficulty,
+            time: body.time,
+            quiz: body.quiz
+        });
+
+        res.status(200).json({ status: 'success', data: { editedQuiz } })
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: err });

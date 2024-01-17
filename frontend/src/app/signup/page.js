@@ -12,7 +12,7 @@ const signup = () => {
   //Create User
   const handleSignUp = async () => {
     try {
-      const res = await axios.post('http://localhost:8000/user', {
+      const res = await axios.post('https://backend-one-blush-69.vercel.app/user', {
       username: signupData.username,
       email: signupData.email,
       password: signupData.password
@@ -37,15 +37,15 @@ const signup = () => {
             <button onClick={() => router.push('/signup')} className='py-[10px] px-[15px] justify-center items-center text-[#000000] font-bold rounded-[10px] underline decoration-wavy'>Sign up</button>
           </div>
           <h3>email</h3>
-          <input type='text' placeholder='Enter email address' className='w-[450px] h-[5%] p-[20px]' onChange={(e) => setSignupData((prev) => ({ ...prev, email: e.target.value }))} />
+          <input type='text' placeholder='Enter email address' className='w-[450px] h-[5%] p-[20px] outline-none' onChange={(e) => setSignupData((prev) => ({ ...prev, email: e.target.value }))} />
 
           <h3>username</h3>
-          <input type='text' placeholder='Enter username' className='w-[450px] h-[5%] p-[20px]' onChange={(e) => setSignupData((prev) => ({ ...prev, username: e.target.value }))} />
+          <input type='text' placeholder='Enter username' className='w-[450px] h-[5%] p-[20px] outline-none' onChange={(e) => setSignupData((prev) => ({ ...prev, username: e.target.value }))} />
 
           <h3>password</h3>
           <div className='bg-[#ffffff] w-[450px] h-[5%] p-[20px] flex justify-between items-center'>
             <input type={showHide ? 'text' : 'password'} placeholder='••••••••' onChange={(e) => setSignupData((prev) => ({ ...prev, password: e.target.value }))} 
-            onKeyDown={(e) => {if(e.key === 'Enter') return handleSignUp()}}/>
+            onKeyDown={(e) => {if(e.key === 'Enter') return handleSignUp()}} className='outline-none'/>
             <button onClick={() => setShowHide(!showHide)}>{showHide ? 'Show' : 'Hide'}</button>
           </div>
           <button onClick={() => handleSignUp()} className='bg-[#586380] w-[450px] h-[5%] p-[15px] text-[#FFFFFF] mt-[20px]'>Sign up</button>

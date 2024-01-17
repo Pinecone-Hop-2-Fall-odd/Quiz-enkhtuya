@@ -24,20 +24,22 @@ const Page = () => {
     const tempData = Object.values(others).reduce((sum, cur, index) => ({ ...sum, [index + 1]: cur }), {})
     setNewQuizData(tempData)
   }
-
+  useEffect(()=>{ if(window) { console.log(username)}}, [username])
+  
   const handleSubmit = async () => {
     try {
-        const res = await axios.post('http://localhost:8000/quiz', {
+        const res = await axios.post('https://backend-one-blush-69.vercel.app/quiz', {
         subjectName: newData.subjectName,
         quiz: Object.values(newQuizData),
         category: newData.category,
         difficulty: newData.difficulty,
         time: newData.time * 60,
-        // creator: username
+        creator: username
       })
       console.log(res);
     } catch (err) { console.log(err); alert(`Quiz must have ${Object.keys(err.response.data.message.errors)}`) }
   }
+
 
   return (
     <div className='flex w-full h-screen justify-center items-center bg-[#f6f7fb] p-[5%] overflow-auto'>
@@ -52,7 +54,7 @@ const Page = () => {
         <div className='flex flex-col p-[10px] justify-start gap-[6px] text-[#2e3856]'>
           <h4 className='font-bold'>Subject title</h4>
           <input onChange={(e) => setNewData((prev) => ({ ...prev, subjectName: e.target.value }))}
-            type='text' placeholder='Enter a title, like “Chinese HSK4 - Lesson 18: Protect our Mother Earth' className='h-[50px] p-[10px] rounded-[10px]' />
+            type='text' placeholder='Enter a title, like “Chinese HSK4 - Lesson 18: Protect our Mother Earth' className='h-[50px] p-[10px] rounded-[10px] outline-none' />
         </div>
         <div className='flex justify-around items-center gap-[10px] w-[100%]'>
           <select className='p-[10px] text-[#FFFFFF] bg-[#2e3856] hover:bg-[#515972] w-[24%]' onChange={(e) => setNewData((prev) => ({ ...prev, category: e.target.value }))}>
@@ -63,7 +65,7 @@ const Page = () => {
           </select>
           <div className='flex justify-around items-center p-[5px] text-[#2e3856] font-bold w-[40%] bg-[#FFFFFF] rounded-[10px]'>
             <h3>Time limit: </h3>
-            <input placeholder='...minute' className='p-[10px] w-[70%]' onChange={(e) => setNewData((prev) => ({ ...prev, time: Number(e.target.value) }))} />
+            <input placeholder='...minute' className='p-[10px] w-[70%] outline-none' onChange={(e) => setNewData((prev) => ({ ...prev, time: Number(e.target.value) }))} />
           </div>
         </div>
         {Object.keys(newQuizData).map((quizIndex, index) => <Question key={`card-${index}`} newQuizData={newQuizData} deleteCard={() => deleteCard(index + 1)} number={quizIndex} setNewQuizData={setNewQuizData} />)}

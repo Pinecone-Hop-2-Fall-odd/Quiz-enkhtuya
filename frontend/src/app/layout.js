@@ -24,12 +24,13 @@ export default function RootLayout({ children }) {
     try {
       if (window) {
         const localToken = localStorage.getItem("token");
+
         if (localToken === null) {
           return router.push('/login')
         } else {
           setToken(localToken);
           if (localToken) {
-            const { data } = await axios.get(`http://localhost:8000/currentUser`, { headers: { "token": localToken } })
+            const { data } = await axios.get(`https://backend-one-blush-69.vercel.app/currentUser`, { headers: { "token": localToken } })
             setUsername(data.data.username);
           }
         }
@@ -39,7 +40,7 @@ export default function RootLayout({ children }) {
 
   useEffect(() => {
     checkToken();
-  }, [])
+  }, [token, username])
 
   return (
     <html lang="en">

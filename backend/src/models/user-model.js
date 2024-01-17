@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: [true, 'Please provide a password'], minlength: 7 },
     image: String,
     createdOn: Date,
-    passedQuiz: {type: Number, default: 0}
+    passedQuiz: {type: Number, default: 0},
+    createdQuiz: {type: Number, default: 0},
 });
 
 export const UserModel = mongoose.model("user", userSchema);

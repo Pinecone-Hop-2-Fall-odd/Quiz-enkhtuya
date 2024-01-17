@@ -40,7 +40,7 @@ export const login = async (req, res) => {
             from: 'enkhtuya.b2051@gmail.com',
             to: filteredUser.email,
             subject: 'Email verification',
-            text: `${Date.now()}`
+            text: `Welcome to Quiz0`
          };
 
          transporter.sendMail(mailOptions, function (error, info) {
