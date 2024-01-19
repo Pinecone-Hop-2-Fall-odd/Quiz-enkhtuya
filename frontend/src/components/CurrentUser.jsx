@@ -5,19 +5,20 @@ import { RxAvatar } from "react-icons/rx";
 import { useRouter } from 'next/navigation';
 // import { UserDataContext } from '@/app/layout';
 import { useEffect, useState, useContext } from 'react'
+import { UserDataContext } from '@/app/layout';
 
 const CurrentUser = () => {
     const router = useRouter();
     const [currentUser, setCurrentUser] = useState(null)
-    // const { token } = useContext(UserDataContext);
-    const token = localStorage.getItem("token");
+    const { token } = useContext(UserDataContext);
     const handleLogOut = () => {
         localStorage.removeItem("token");
         setCurrentUser(null);
         router.push('/login');
     }
     const getCurrentUser = async () => {
-        try { const { data } = await axios.get(`https://backend-one-blush-69.vercel.app/currentUser`, { headers: { "token": token } })
+        try {
+            const { data } = await axios.get(`https://backend-one-blush-69.vercel.app/currentUser`, { headers: { "token": token } })
             setCurrentUser(data.data)
             console.log(data)
         } catch (err) { console.error(err) }

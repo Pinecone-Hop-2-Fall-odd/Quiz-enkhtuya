@@ -1,4 +1,5 @@
 'use client'
+
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { createContext, useEffect, useState } from 'react'
@@ -22,7 +23,7 @@ export default function RootLayout({ children }) {
 
   const checkToken = async () => {
     try {
-      if (window) {
+      if (typeof window !== 'undefined') {
         const localToken = localStorage.getItem("token");
 
         if (localToken === null) {
@@ -40,7 +41,7 @@ export default function RootLayout({ children }) {
 
   useEffect(() => {
     checkToken();
-  }, [token, username])
+  }, [])
 
   return (
     <html lang="en">

@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/navigation';
 import CurrentUser from './CurrentUser';
 import { IoIosSearch } from "react-icons/io";
@@ -10,15 +10,17 @@ import { FaPaintbrush } from "react-icons/fa6";
 import { BiConversation } from "react-icons/bi";
 import { IoLanguage } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
+import { UserDataContext } from '@/app/layout';
 
 const NavBar = ({ index, handleClick, setQuizData, initialData }) => {
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
+  const { token } = useContext(UserDataContext);
   const router = useRouter();
   const search = (input) => {
     const filteredSearch = initialData.filter((quiz) => { return quiz.subjectName.toLowerCase().includes(input.toLowerCase()) });
     setQuizData(filteredSearch);
   }
-  
+
   return (
     <div className='flex flex-col min-h-[10%] w-full fixed justify-between items-center px-[5%] gap-[10px] bg-[#ffffff]'>
       <div className='flex min-h-[5%] w-full justify-between items-center px-[5%] pt-[20px] gap-[20px] bg-[#ffffff]'>

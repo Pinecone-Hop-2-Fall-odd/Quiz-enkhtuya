@@ -9,9 +9,9 @@ export default function Home() {
   const [initialData, setInitialData] = useState();
   const [quizData, setQuizData] = useState([]);
   const [index, setIndex] = useState(0);
-  // const { token, username } = useContext(UserDataContext);
-  const { username } = useContext(UserDataContext);
-  const token = localStorage.getItem("token");
+  const { token, username } = useContext(UserDataContext);
+  // const { username } = useContext(UserDataContext);
+  // const token = localStorage.getItem("token");
 
   const handleClick = (idx, category) => {
     setIndex(idx);

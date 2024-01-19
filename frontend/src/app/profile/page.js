@@ -1,17 +1,18 @@
 'use client'
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 // import { UserDataContext } from '@/app/layout';
 // import { useContext } from 'react';
 import { RxAvatar } from "react-icons/rx";
 import { AiFillFlag } from "react-icons/ai";
 import { MdCreateNewFolder } from "react-icons/md";
+import { UserDataContext } from '../layout';
 
 const profile = () => {
     const router = useRouter();
     // const { username, token } = useContext(UserDataContext);
-    const token = localStorage.getItem("token");
+    const { token } = useContext(UserDataContext);
     const [currentUser, setCurrentUser] = useState(null)
     // const [img, setImg] = useState(null);
 
